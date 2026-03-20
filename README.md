@@ -1,10 +1,10 @@
 # Leer Go met Tests
 
 <p align="center">
-  <img src="red-green-blue-gophers-smaller.png" />
+    <img src="red-green-blue-krabs.jpg" />
 </p>
 
-[Art by Denise](https://twitter.com/deniseyu21)
+[Art by Nano Banana](https://gemini.google.com)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/quii/learn-go-with-tests)](https://goreportcard.com/report/github.com/quii/learn-go-with-tests)
 
