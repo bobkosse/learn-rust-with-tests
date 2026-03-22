@@ -1,7 +1,173 @@
-# Hello, World
+# Hello, Rust
 
-[Je vindt de code voor dit hoofdstuk hier](https://github.com/bobkosse/learn-rust-with-tests/tree/main/code/HelloWorld)
+[Je vindt de code voor dit hoofdstuk hier](https://github.com/bobkosse/learn-rust-with-tests/tree/main/code/hello_rust)
 
-Ik ben ooit in de jaren 90 van de vorige eeuw begonnen met programmeren. Ieder programeer boek dat je toen opsloeg begon met een programma dat ```Hello, World``` op het scherm print. Om die traditie voor de moderne taal Rust ook vast te houden, beginnen we dit hoofdstuk met een klasieke ['Hello, World'](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) applicatie.
+Ik ben ooit in de jaren 90 van de vorige eeuw begonnen met programmeren. Ieder programeer boek dat je toen opsloeg begon met een programma dat *Hello, World* op het scherm print. Om die traditie voor de moderne taal Rust ook vast te houden, beginnen we dit hoofdstuk met een klasieke ['Hello, World'](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) applicatie.
 
 ## Aan de slag
+
+Met Rust is het maken van een Hello, World applicatie enorm makkelijk. Je hoeft er zelfs niet eens voor te kunnen programmeren! Om te beginnen met een "Hello, World" in Rust, starten we met het commando om een nieuwe Rust applicatie te maken. Volg daarvoor de volgende stappen:
+
+Open de terminal en ga naar de map waarin je jouw Rust code gaat schrijven. Het maakt eigenlijk niet uit in welke map je jouw code bewaard, maar het is natuurlijk wel heel handig om dat altijd in dezelfde map te doen. De meest voor de hand liggende locatie is natuurlijk je Home-map.
+
+**Op Mac en Linux (of met Microsoft PowerShell)**:
+```bash
+cd ~
+```
+
+**Op Windows**:
+```bash
+cd %USERPROFILE%
+```
+
+In je Home-map maak je een map aan waarin je alle code gaat opslaan. Het commando is voor alle besturingssystemen hetzelfde:
+
+```bash
+mkdir code
+```
+
+Dit maakt de map met de naam *code* aan. Ga met het volgende commando naar je nieuwe map om met het echte werk te beginnen:
+
+```bash
+cd code
+```
+
+## De eerste Rust applicatie
+
+In het vorige hoofdstuk zag je een aantal *cargo*-commando's. Cargo is de tool die je helpt om je Rust project te beheren. In deze eerste stap; om je Rust project aan te maken. Voer in je *code* map het onderstaande commando uit:
+
+```bash
+cargo new hello_rust
+```
+
+Het resultaat dat je kijgt te zien moet ongeveer zo uitzien:
+
+```bash
+Creating binary (application) `hello_rust` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+```
+
+Laten we eerst eens kijken wat ons nieuwe programma eigenlijk doet. Typ in de commandline de volgende commando's:
+
+```bash
+cd hello_rust
+cargo run
+```
+
+Dit zou het onderstaande resultaat moeten geven:
+
+```bash
+Compiling hello_rust v0.1.0 (/Users/bobkosse/Development/learn-rust-with-tests/code/hello_rust)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running `target/debug/hello_rust`
+Hello, world!
+```
+
+Yes! We hebben ons eerste programma *gemaakt*! Of nou ja, eigenlijk heeft Rust zelf een eerste programma gemaakt. Laten we eens kijken wat we tot nu toe eigenlijk hebben.
+
+## Wat we nu hebben
+
+Om de code te kunnen bekijken heb je een tekst editor nodig. Deze heb je als het goed is het volgende hoofdstuk al geinstalleed. Open je tekst editor en open de map ```hello_rust```. Als je alle commando's hierboven hebt uitgevoerd, zie je hier de volgende mappen en bestanden.
+
+```bash
+- hello_rust
+  - src
+    - main.rs
+  - target
+  - Cargo.lock
+  - Cargo.toml
+```
+
+Je ziet hier 2 mappen:
+**src**: hierin staat je broncode. Op dit moment is dat alleen het bestand *main.rs*, maar bij grote applicaties zijn dit meerdere bestanden en mappen die samen de applicatie vormen. Hier gaan we straks uitgebreid naar kijken.
+
+**target**: deze map wordt door het commando ```cargo run``` dat we hebben uitgevoerd. In deze map worden de uitvoerbare progamma's die je bouwt opgeslagen. Als je deze opent zie je dat er al veel bestanden in staan. Voor dit hoofdstuk gaat het te ver om alles in deze map al te behandelen, maar onthoud dat hier uiteindelijk je uitvoerbare bestanden terecht komen.
+
+Dan zijn er nog 2 bestanden waar we kort naar kijken:
+**Cargo.toml**: in dit bestand staat de configuratie van de applicatie die je aan het bouwen bent. Open dit bestand eens in je editor. Het zou er ongeveer zo uit moeten zien:
+
+```toml
+[package]
+name = "hello_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+```
+
+Onder het onderdeel **[package]** zie je een aantal instellingen die gaan over jouw applicatie:
+- name: de naam van jouw applicatie
+- version: de versie van jouw applicatie
+- edition: de versie van Rust waar je mee werkt
+
+Onder het onder **[dependencies]** komen eventuele extra pakketen te staan die je aan jouw applicatie toevoegt. Deze worden in Rust *crates* genoemd en bevatten functionaliteit die je kunt hergebruiken. Deze *crates* kun je later ook zelf bouwen zodat je code die je geschreven hebt kunt hergebruiken.
+
+Het tweede bestand is **Cargo.lock**. Als je dit bestand opent zie je ongeveer dit:
+
+```toml
+# This file is automatically @generated by Cargo.
+# It is not intended for manual editing.
+version = 4
+
+[[package]]
+name = "hello_rust"
+version = "0.1.0"
+```
+
+Zoals de eerste regel al aangeeft wordt dit bestand door Cargo beheert. Dit bestand legt vast wat er op dit moment in jouw applicatie nodig. Je kunt het verschil tussen het .toml en .lock bestand als volgt zien:
+- Cargo.toml is je boodschappenlijstje: Hierin schrijf je op wat je in je applicatie nodig hebt. Je geeft aan wat je ongeveer wilt (bijvoorbeeld: versie 1.0 of hoger).
+- Cargo.lock is de kassabon: Hierop staat exact welk versie gebruikt wordt (bijvoorbeeld versie 1.2) en wat er is geïnstalleerd. Het legt dus de exacte versies vast van alles wat er daadwerkelijk op je computer is geïnstalleerd.
+
+Cargo.lock is dus een heel belangrijk bestand. Zeker wanneer je met andere ontwikkelaars samenwerkt. Stel dat je jouw code naar een collega stuurt. Zonder Cargo.lock zou hun computer de "nieuwste" versie van een pakket kunnen downloaden, die toevallig net een klein foutje bevat. Dankzij Cargo.lock weet de computer van je collega exact welke versies jij gebruikte, zodat de code daar precies hetzelfde werkt als bij jou.
+
+**Belangrijk**: Je hoeft dit bestand nooit zelf aan te passen. Cargo regelt dit volledig voor je. Het enige wat jij doet, is het bestand mee opsturen (bijvoorbeeld naar GitHub) zodat je project overal "reproduceerbaar" is.
+
+## Op naar de code
+
+Zo, het saaie stuk hebben we gehad. Laten we nu eens echt de code in duiken en kijken wat die eigenlijk doet. Open het bestand *main.rs* (deze vind je in de *src* map). Dit bestand ziet er zo uit:
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+Ons eerste programma bestaat uit slechts 3 regels code. We gaan er regel voor regel doorheen lopen om te kijken wat deze code precies betekent:
+
+```rust
+fn main() {
+```
+
+Ieder Rust programma heeft een ```main()``` methode. Dat is een functie binnen het programma waar Rust naar zoekt. Als het deze functie gevonden heeft, wordt die functie uitgevoerd. Een functie wordt in Rust aangegeven met het sleutelwoord ```fn```. Een functie wordt 'samengehouden' door accolades. Op de eerste regels zie je achter ```main()``` de start van de functie: ```{```
+
+Op de laatste regel van de code zie je de afsluiting van de functie ```}```.
+
+De functie zelf heeft maar 1 regel code:
+
+```rust
+println!("Hello, world!");
+```
+
+Misschien was het je bij de ```main``` functie ook al opgevallen dat daar haakjes achter staan. Tussen die haakjes kun je waarden meegeven waar de functie iets mee kan doen. Deze waarden worden *parameters* genoemd.
+
+Binnen de *main* functie wordt ook een functie aangeroepen: ```println```. Tussen de haakjes worden een tekst *"Hello, world!"* aan de functie meegegeven. De ```println``` functie zorgt er vervolgens voor dat deze tekst op het scherm van de gebruiker wordt geprint.
+
+Achter de ```println``` tekst zie je ook een uitroepteken staan. Dat komt omdat ```println``` binnen Rust eigenlijk een **macro** is. Een macro is een speciaal stukje code dat code schrijft tijdens het compileren. Macros's gaan we later uitgebreid behandelen, dus onthoud voor nu: ```println!```, print de tekst op het scherm van de gebruiker.
+
+## Oefening
+
+Voordat we in Test Driven Development duiken wil ik je eerst een kleine oefening laten doen. Pas de code zo aan dat deze *Hello, Rust!* op het scherm zet in plaats van *Hello, world!*.
+
+Pas je code aan en probeer deze uit met het commando:
+
+```bash
+cargo run
+```
+
+Als je alles goed gedaan hebt, zou je code er nu zo uit moeten zien:
+
+```rust
+fn main() {
+    println!("Hello, Rust!");
+}
+```
